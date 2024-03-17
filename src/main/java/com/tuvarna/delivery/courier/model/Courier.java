@@ -21,7 +21,7 @@ public class Courier {
     private Long id;
     @Column(nullable = false, unique = true)
     private String workPhoneNumber;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Integer yearsOfExperience;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "office_id")
