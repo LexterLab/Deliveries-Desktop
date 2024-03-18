@@ -25,6 +25,11 @@ public record SignUpRequestDTO (
         @Length(min = 1, max = 50, message = "Last name must not exceed 50 characters.")
         @Pattern(regexp = "^[A-Za-z'-. ]{1,50}$", message = "Please enter a valid last name.")
         String lastName,
+        @Schema(example = "user")
+        @NotEmpty(message = "Please enter a username.")
+        @Size(min = 4, message = "Username must be at least 8 characters long.")
+        @Size(max = 100, message = "Username must not exceed 100 characters.")
+        String username,
 
         @Schema(example = "!User123")
         @NotEmpty(message = "Please enter a password.")
