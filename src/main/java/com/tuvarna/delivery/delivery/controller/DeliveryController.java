@@ -1,6 +1,6 @@
 package com.tuvarna.delivery.delivery.controller;
 
-import com.tuvarna.delivery.delivery.payload.DeliveryRequestDTO;
+import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
 import com.tuvarna.delivery.delivery.service.DeliveryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

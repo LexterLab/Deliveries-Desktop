@@ -5,7 +5,7 @@ import com.tuvarna.delivery.city.repository.CityRepository;
 import com.tuvarna.delivery.delivery.model.Delivery;
 import com.tuvarna.delivery.delivery.model.Status;
 import com.tuvarna.delivery.delivery.model.constant.StatusType;
-import com.tuvarna.delivery.delivery.payload.DeliveryRequestDTO;
+import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
 import com.tuvarna.delivery.delivery.payload.mapper.DeliveryMapper;
 import com.tuvarna.delivery.delivery.repository.DeliveryRepository;
 import com.tuvarna.delivery.delivery.repository.StatusRepository;
@@ -13,7 +13,6 @@ import com.tuvarna.delivery.exception.ResourceNotFoundException;
 import com.tuvarna.delivery.user.model.User;
 import com.tuvarna.delivery.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
