@@ -1,5 +1,6 @@
 package com.tuvarna.delivery.delivery.model;
 
+import com.tuvarna.delivery.city.model.City;
 import com.tuvarna.delivery.courier.model.Courier;
 import com.tuvarna.delivery.user.model.User;
 import jakarta.persistence.*;
@@ -31,6 +32,23 @@ public class Delivery {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "from_city_id")
+    private City fromCity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "to_cityid")
+    private City toCity;
+
+    @Column(nullable = false)
+    private Double weightKG;
+
+    @Column(nullable = false)
+    private String productName;
+
+    @Column(nullable = false)
+    private Double totalPrice;
 
     private String details;
 }
