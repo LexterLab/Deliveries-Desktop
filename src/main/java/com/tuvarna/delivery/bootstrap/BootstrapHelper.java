@@ -27,7 +27,7 @@ public class BootstrapHelper {
         Role courierRole = new Role();
         userRole.setName("ROLE_USER");
         adminRole.setName("ROLE_ADMIN");
-        courierRole.setName("Courier");
+        courierRole.setName("ROLE_COURIER");
         roleRepository.saveAll(List.of(userRole, adminRole, courierRole));
 
         User admin = new User();
@@ -49,15 +49,15 @@ public class BootstrapHelper {
         user.setRoles(Set.of(userRole));
 
         User courierUser = new User();
-        user.setFirstName("George");
-        user.setLastName("Russel");
-        user.setUsername("calendar");
-        user.setAddress("address");
-        user.setPhoneNumber("+35986******");
-        user.setPassword(new BCryptPasswordEncoder().encode("!user123"));
-        user.setRoles(Set.of(courierRole));
+        courierUser.setFirstName("George");
+        courierUser.setLastName("Russel");
+        courierUser.setUsername("calendar");
+        courierUser.setAddress("address");
+        courierUser.setPhoneNumber("+35986******");
+        courierUser.setPassword(new BCryptPasswordEncoder().encode("!user123"));
+        courierUser.setRoles(Set.of(courierRole));
 
-        userRepository.saveAll(List.of(admin, user));
+        userRepository.saveAll(List.of(admin, user, courierUser));
 
         City sofia = new City();
         sofia.setName("Sofia");
@@ -80,9 +80,9 @@ public class BootstrapHelper {
 
 
         Office office2 = new Office();
-        office.setCity(sofia);
-        office.setPhoneNumber("+359********");
-        office.setName("Office 2");
+        office2.setCity(sofia);
+        office2.setPhoneNumber("+359********");
+        office2.setName("Office 2");
 
         officeRepository.saveAll(List.of(office, office2));
 
