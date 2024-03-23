@@ -1,6 +1,5 @@
 package com.tuvarna.delivery.office.model;
 
-import com.tuvarna.delivery.office.model.Office;
 import com.tuvarna.delivery.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,10 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Entity
-@Table(name = "couriers")
+@Table(name = "courier_info")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -24,7 +21,7 @@ public class Courier {
     private String workPhoneNumber;
     @Column(nullable = false)
     private Integer yearsOfExperience;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
