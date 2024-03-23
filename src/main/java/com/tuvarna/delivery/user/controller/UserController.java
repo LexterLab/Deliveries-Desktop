@@ -3,6 +3,8 @@ package com.tuvarna.delivery.user.controller;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.user.service.UserService;
 import com.tuvarna.delivery.utils.AppConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/users/deliveries")
+@Tag(name = "User REST APIs")
 public class UserController {
     private final UserService userService;
 
 
+    @Operation(summary = "W.I.P")
     @GetMapping("")
     public ResponseEntity<DeliveryResponse> getAllDeliveriesByUser
             (
