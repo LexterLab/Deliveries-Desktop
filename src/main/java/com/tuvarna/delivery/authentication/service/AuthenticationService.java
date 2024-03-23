@@ -1,5 +1,6 @@
 package com.tuvarna.delivery.authentication.service;
 
+import com.tuvarna.delivery.authentication.model.constant.AuthenticationType;
 import com.tuvarna.delivery.authentication.payload.request.LoginRequestDTO;
 import com.tuvarna.delivery.authentication.payload.request.SignUpRequestDTO;
 import com.tuvarna.delivery.authentication.service.helper.AuthenticationHelper;
@@ -36,12 +37,12 @@ public class AuthenticationService {
     }
 
     @Transactional
-    public String signUp(SignUpRequestDTO requestDTO) {
+    public String signUp(SignUpRequestDTO requestDTO, AuthenticationType type) {
         if (userRepository.existsByUsernameIgnoreCase(requestDTO.username())) {
             throw new APIException(HttpStatus.BAD_REQUEST, Messages.USER_EXISTS);
         }
 
-        User user = helper.buildUser(requestDTO);
+        User user = helper.buildUser(requestDTO, type);
         userRepository.save(user);
         return Messages.USER_SUCCESSFULLY_REGISTERED;
     }

@@ -1,5 +1,6 @@
 package com.tuvarna.delivery.authentication.controller;
 
+import com.tuvarna.delivery.authentication.model.constant.AuthenticationType;
 import com.tuvarna.delivery.authentication.payload.request.LoginRequestDTO;
 import com.tuvarna.delivery.authentication.payload.request.SignUpRequestDTO;
 import com.tuvarna.delivery.authentication.service.AuthenticationService;
@@ -12,10 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -45,8 +43,9 @@ public class AuthenticationController {
             @ApiResponse( responseCode = "400", description = "Http Status 400 BAD REQUEST")
     })
     @PostMapping("signup")
-    public ResponseEntity<String> signup(@Valid @RequestBody SignUpRequestDTO requestDTO) {
-        String response = authenticationService.signUp(requestDTO);
+    public ResponseEntity<String> signup(@Valid @RequestBody SignUpRequestDTO requestDTO,
+                                         @RequestParam AuthenticationType type) {
+        String response = authenticationService.signUp(requestDTO, type);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

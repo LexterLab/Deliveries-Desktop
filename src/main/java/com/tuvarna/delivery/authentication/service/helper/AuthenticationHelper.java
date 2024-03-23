@@ -1,5 +1,6 @@
 package com.tuvarna.delivery.authentication.service.helper;
 
+import com.tuvarna.delivery.authentication.model.constant.AuthenticationType;
 import com.tuvarna.delivery.authentication.payload.request.SignUpRequestDTO;
 import com.tuvarna.delivery.user.model.Role;
 import com.tuvarna.delivery.user.model.User;
@@ -17,17 +18,26 @@ public class AuthenticationHelper {
     private final RoleRepository repository;
     private final PasswordEncoder encoder;
 
-    private User setRoles(User user) {
-        Optional<Role> userRole = repository.findByName("ROLE_USER");
+    private User setRoles(User user, AuthenticationType type) {
         Role role = new Role();
-        if (userRole.isPresent()) {
-            role = userRole.get();
+        if (type.equals(AuthenticationType.USER)) {
+            Optional<Role> userRole = repository.findByName("ROLE_USER");
+
+            if (userRole.isPresent()) {
+                role = userRole.get();
+            }
+        } else if (type.equals(AuthenticationType.COURIER)) {
+            Optional<Role> courierRole = repository.findByName("ROLE_COURIER");
+
+            if (courierRole.isPresent()) {
+                role = courierRole.get();
+            }
         }
         user.setRoles(Set.of(role));
         return user;
     }
 
-    public User buildUser(SignUpRequestDTO requestDTO) {
+    public User buildUser(SignUpRequestDTO requestDTO, AuthenticationType type) {
         User user = new User();
         user.setFirstName(requestDTO.firstName());
         user.setLastName(requestDTO.lastName());
@@ -35,6 +45,6 @@ public class AuthenticationHelper {
         user.setUsername(requestDTO.username());
         user.setPhoneNumber(requestDTO.phoneNumber());
         user.setAddress(requestDTO.address());
-        return setRoles(user);
+        return setRoles(user, type);
     }
 }
