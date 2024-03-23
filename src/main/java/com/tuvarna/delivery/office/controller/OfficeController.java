@@ -1,6 +1,7 @@
 package com.tuvarna.delivery.office.controller;
 
 import com.tuvarna.delivery.office.payload.request.CourierRequestDTO;
+import com.tuvarna.delivery.office.payload.request.UpdateCourierRequestDTO;
 import com.tuvarna.delivery.office.service.OfficeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -40,5 +41,47 @@ public class OfficeController {
     public ResponseEntity<CourierRequestDTO> addCourierToOffice(@Schema(example = "1") @PathVariable Long officeId,
                                                                 @RequestBody @Valid CourierRequestDTO requestDTO) {
         return new ResponseEntity<>(officeService.enlistCourierToOffice(officeId, requestDTO), HttpStatus.CREATED);
+    }
+
+    @Operation(
+            summary = "Delete Courier REST API",
+            description = "Delete Courier REST API is used to delete a courier account"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "201", description = "Http Status 204 NO CONTENT"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("{officeId}/couriers/{courierId}")
+    public ResponseEntity<Void> deleteCourier(@Schema(example = "1") @PathVariable Long officeId,
+                                              @Schema(example = "1") @PathVariable Long courierId) {
+        officeService.deleteCourier(officeId, courierId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "Update Courier REST API",
+            description = "Update Courier REST API is used to update a courier account"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "200", description = "Http Status 204 NO CONTENT"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("{officeId}/couriers/{courierId}")
+    public ResponseEntity<UpdateCourierRequestDTO> updateCourierData(@Schema(example = "1") @PathVariable Long officeId,
+                                                                     @Schema(example = "1") @PathVariable Long courierId,
+                                                                     @RequestBody @Valid UpdateCourierRequestDTO requestDTO) {
+        return ResponseEntity.ok(officeService.updateCourier(officeId, courierId, requestDTO));
     }
 }
