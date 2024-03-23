@@ -1,7 +1,7 @@
 package com.tuvarna.delivery.delivery.model;
 
 import com.tuvarna.delivery.city.model.City;
-import com.tuvarna.delivery.courier.model.Courier;
+import com.tuvarna.delivery.office.model.Courier;
 import com.tuvarna.delivery.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

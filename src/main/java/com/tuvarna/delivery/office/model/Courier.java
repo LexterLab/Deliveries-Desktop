@@ -1,4 +1,4 @@
-package com.tuvarna.delivery.courier.model;
+package com.tuvarna.delivery.office.model;
 
 import com.tuvarna.delivery.office.model.Office;
 import com.tuvarna.delivery.user.model.User;
