@@ -1,4 +1,4 @@
-package com.tuvarna.delivery.delivery.service;
+package com.tuvarna.delivery.delivery.service.helper;
 
 import com.tuvarna.delivery.delivery.model.Delivery;
 import com.tuvarna.delivery.delivery.payload.mapper.DeliveryMapper;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class DeliveryServiceHelper {
+public class DeliveryHelper {
 
     public DeliveryResponse getDeliveryResponse(Page<Delivery> deliveryPage) {
         List<DeliveryDTO> deliveries = DeliveryMapper.INSTANCE.entityToDTO(deliveryPage.getContent());
