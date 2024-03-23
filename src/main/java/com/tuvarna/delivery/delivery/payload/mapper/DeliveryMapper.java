@@ -14,6 +14,7 @@ import java.util.List;
 public interface DeliveryMapper {
     DeliveryMapper INSTANCE = Mappers.getMapper(DeliveryMapper.class);
 
+    @Mapping(expression = "java(delivery.getUser().getUsername())", target = "username")
     @Mapping(expression = "java(delivery.getStatus().getType())", target = "statusName")
     @Mapping(expression = "java(delivery.getToCity().getName())", target = "toCityName")
     @Mapping(expression = "java(delivery.getFromCity().getName())", target = "fromCityName")
