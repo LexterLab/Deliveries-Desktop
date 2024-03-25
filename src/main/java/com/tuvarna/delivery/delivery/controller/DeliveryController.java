@@ -2,6 +2,7 @@ package com.tuvarna.delivery.delivery.controller;
 
 import com.tuvarna.delivery.delivery.model.constant.StatusType;
 import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
+import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.delivery.service.DeliveryService;
 import com.tuvarna.delivery.utils.AppConstants;
@@ -71,5 +72,65 @@ public class DeliveryController {
             @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir) {
             return ResponseEntity.ok(deliveryService.retrieveAndFilterDeliveries(username, type.getName(), pageNo, pageSize, sortBy, sortDir));
+    }
+
+
+    @GetMapping("{deliveryId}")
+    @PreAuthorize("hasAnyRole('COURIER', 'ADMIN')")
+    @Operation(
+            summary = "Get Delivery REST API",
+            description = "Get Delivery REST API is used to retrieve a delivery"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "200", description = "Http Status 200 SUCCESS"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    public ResponseEntity<DeliveryDTO> retrieveDeliveryInfo(@PathVariable @Schema(example = "1") Long deliveryId) {
+        return ResponseEntity.ok(deliveryService.retrieveDeliveryInfo(deliveryId));
+    }
+
+    @DeleteMapping("{deliveryId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(
+            summary = "Delete Delivery REST API",
+            description = "Delete Delivery REST API is used to delete delivery by identifier"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "204", description = "Http Status 204 NO CONTENT"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    public ResponseEntity<Void> deleteRecipeById(@PathVariable @Schema(example = "1") Long deliveryId) {
+        deliveryService.deleteDelivery(deliveryId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("{deliveryId}")
+    @PreAuthorize("hasAnyRole('COURIER', 'ADMIN')")
+    @Operation(
+            summary = "Update Delivery REST API",
+            description = "Update Delivery REST API is used to update delivery by identifier"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "200", description = "Http Status 200 SUCCESS"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    public ResponseEntity<DeliveryDTO> updateRecipeById(@PathVariable @Schema(example = "1") Long deliveryId,
+                                                        @RequestBody @Valid DeliveryRequestDTO requestDTO) {
+        return ResponseEntity.ok(deliveryService.updateDelivery(deliveryId, requestDTO));
     }
 }

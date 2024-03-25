@@ -7,6 +7,7 @@ import com.tuvarna.delivery.delivery.model.Status;
 import com.tuvarna.delivery.delivery.model.constant.StatusType;
 import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
 import com.tuvarna.delivery.delivery.payload.mapper.DeliveryMapper;
+import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.delivery.repository.DeliveryRepository;
 import com.tuvarna.delivery.delivery.repository.StatusRepository;
@@ -27,29 +28,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final UserRepository userRepository;
-    private final CityRepository cityRepository;
-    private final StatusRepository statusRepository;
     private final DeliveryHelper deliveryHelper;
 
     @Transactional
     public DeliveryRequestDTO requestDelivery(DeliveryRequestDTO requestDTO, String username) {
         User user = userRepository.findUserByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Username", username));
+
         Delivery delivery  = DeliveryMapper.INSTANCE.dtoToEntity(requestDTO);
-
-        City fromCity = cityRepository.findCityByNameIgnoreCase(requestDTO.fromCityName())
-                .orElseThrow(() -> new ResourceNotFoundException("City", "name", requestDTO.fromCityName()));
-
-        City toCity = cityRepository.findCityByNameIgnoreCase(requestDTO.toCityName())
-                .orElseThrow(() -> new ResourceNotFoundException("City", "name", requestDTO.toCityName()));
-
-        Status status = statusRepository.findByType(StatusType.WAITING.getName())
-                .orElseThrow(() -> new ResourceNotFoundException("Status", "type", StatusType.WAITING.getName()));
-
+        deliveryHelper.setupDelivery(requestDTO, delivery);
         delivery.setUser(user);
-        delivery.setFromCity(fromCity);
-        delivery.setToCity(toCity);
-        delivery.setStatus(status);
 
         deliveryRepository.save(delivery);
         return requestDTO;
@@ -67,4 +55,29 @@ public class DeliveryService {
     }
 
 
+    @Transactional
+    public void deleteDelivery(Long id) {
+        Delivery delivery = deliveryRepository
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+
+        deliveryRepository.delete(delivery);
+    }
+
+    public DeliveryDTO retrieveDeliveryInfo(Long id) {
+        Delivery delivery = deliveryRepository
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+
+        return DeliveryMapper.INSTANCE.entityToDTO(delivery);
+    }
+
+
+    public DeliveryDTO updateDelivery(Long id, DeliveryRequestDTO requestDTO) {
+        Delivery delivery = deliveryRepository
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+
+        DeliveryMapper.INSTANCE.updateEntityWithDTO(requestDTO, delivery);
+        deliveryHelper.setupDelivery(requestDTO, delivery);
+
+        return DeliveryMapper.INSTANCE.entityToDTO(deliveryRepository.save(delivery));
+    }
 }

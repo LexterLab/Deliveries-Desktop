@@ -6,6 +6,7 @@ import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public interface DeliveryMapper {
     @Mapping(expression = "java(delivery.getCourier() != null && delivery.getCourier().getUser() != null ? delivery.getCourier().getUser().getUsername() : \"none\")", target = "courierName")
     DeliveryDTO entityToDTO(Delivery delivery);
 
+    void updateEntityWithDTO(DeliveryRequestDTO requestDTO, @MappingTarget Delivery delivery);
     Delivery dtoToEntity(DeliveryRequestDTO requestDTO);
 
     List<DeliveryDTO> entityToDTO(Iterable<Delivery> deliveries);

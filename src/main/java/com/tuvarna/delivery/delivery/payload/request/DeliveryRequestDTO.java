@@ -22,7 +22,6 @@ public record DeliveryRequestDTO(
        @Max(value = 100, message = "We are currently accepting max of 100KG weight")
        Double weightKG,
 
-
        @Schema(example = "50.00")
        @Min(value = 0, message = "Total price shouldn't be below 0")
        Double totalPrice,
