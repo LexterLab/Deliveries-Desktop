@@ -9,6 +9,6 @@ public interface Messages {
     String EXPIRED_JWT_TOKEN = "{\"message\": \"Session expired. You have been signed out\"}";
     String UNSUPPORTED_JWT_TOKEN = "{\"message\": \"Unsupported JWT Token\"}";
     String JWT_CLAIM_EMPTY = "{\"message\": \"JWT claim string is empty\"}";
-    String INCORRECT_CREDENTIALS = "Incorrect email or password. Please try again.";
+    String INCORRECT_CREDENTIALS = "Incorrect username or password. Please try again.";
     String NOT_PERMITTED = "User has insufficient permissions to access";
 }

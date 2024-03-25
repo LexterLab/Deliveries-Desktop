@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 public record LoginRequestDTO(
         @Schema(example = "user")
         @NotEmpty(message = "Please enter your username")
-        String email,
+        String username,
 
         @NotEmpty(message = "Please enter your password")
         @Schema(example = "!user123")
