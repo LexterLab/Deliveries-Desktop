@@ -79,7 +79,7 @@ public class LoginPanel extends JPanel {
             String username = usernameField.getText();
             char[] passwordChars = passwordField.getPassword();
             String password = new String(passwordChars);
-            LoginService service = new LoginService();
+            AuthService service = new AuthService();
             try {
                 ResponseEntity<JWTAuthenticationResponse> response = service.fetchSignIn(new LoginRequestDTO(username, password));
                 AccessTokenStorage.storeAccessToken(Objects.requireNonNull(response.getBody()).getAccessToken());

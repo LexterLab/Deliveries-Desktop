@@ -5,7 +5,7 @@ import com.tuvarna.delivery.jwt.JWTAuthenticationResponse;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-public class LoginService {
+public class AuthService {
     public ResponseEntity<JWTAuthenticationResponse> fetchSignIn(LoginRequestDTO requestDTO) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
