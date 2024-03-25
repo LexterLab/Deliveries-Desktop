@@ -29,7 +29,7 @@ public class AuthenticationService {
 
     public JWTAuthenticationResponse login(LoginRequestDTO loginRequestDTO) {
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.email(), loginRequestDTO.password()));
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.username(), loginRequestDTO.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         JWTAuthenticationResponse authenticationResponse = new JWTAuthenticationResponse();
         authenticationResponse.setAccessToken(tokenProvider.generateToken(authentication.getName()));
