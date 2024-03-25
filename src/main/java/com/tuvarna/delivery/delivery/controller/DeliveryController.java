@@ -2,6 +2,7 @@ package com.tuvarna.delivery.delivery.controller;
 
 import com.tuvarna.delivery.delivery.model.constant.StatusType;
 import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
+import com.tuvarna.delivery.delivery.payload.request.UpdateDeliveryStatusRequestDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.delivery.service.DeliveryService;
@@ -132,5 +133,24 @@ public class DeliveryController {
     public ResponseEntity<DeliveryDTO> updateRecipeById(@PathVariable @Schema(example = "1") Long deliveryId,
                                                         @RequestBody @Valid DeliveryRequestDTO requestDTO) {
         return ResponseEntity.ok(deliveryService.updateDelivery(deliveryId, requestDTO));
+    }
+    @PatchMapping("{deliveryId}/status/{statusId}")
+    @PreAuthorize("hasAnyRole('COURIER', 'ADMIN')")
+    @Operation(
+            summary = "Update Delivery Status REST API",
+            description = "Update Delivery Status REST API is used to update delivery status by identifier"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "200", description = "Http Status 200 SUCCESS"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    public ResponseEntity<DeliveryDTO> updateRecipeStatus(@PathVariable @Schema(example = "1") Long deliveryId,
+                                                          @PathVariable @Schema(example = "1") Long statusId) {
+        return ResponseEntity.ok(deliveryService.updateDeliveryStatus(deliveryId, statusId));
     }
 }

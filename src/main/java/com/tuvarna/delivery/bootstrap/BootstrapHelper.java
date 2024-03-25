@@ -71,7 +71,13 @@ public class BootstrapHelper {
         Status waiting = new Status();
         waiting.setType(StatusType.WAITING);
 
-        statusRepository.save(waiting);
+        Status shipped = new Status();
+        shipped.setType(StatusType.SHIPPED);
+
+        Status shipping = new Status();
+        shipping.setType(StatusType.SHIPPING);
+
+        statusRepository.saveAll(List.of(waiting, shipped, shipping));
 
         Office office = new Office();
         office.setCity(varna);

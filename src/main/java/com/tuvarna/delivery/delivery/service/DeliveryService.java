@@ -1,12 +1,9 @@
 package com.tuvarna.delivery.delivery.service;
 
-import com.tuvarna.delivery.city.model.City;
-import com.tuvarna.delivery.city.repository.CityRepository;
 import com.tuvarna.delivery.delivery.model.Delivery;
 import com.tuvarna.delivery.delivery.model.Status;
-import com.tuvarna.delivery.delivery.model.constant.StatusType;
-import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
 import com.tuvarna.delivery.delivery.payload.mapper.DeliveryMapper;
+import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.delivery.repository.DeliveryRepository;
@@ -28,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final UserRepository userRepository;
+    private final StatusRepository statusRepository;
     private final DeliveryHelper deliveryHelper;
 
     @Transactional
@@ -77,6 +75,18 @@ public class DeliveryService {
 
         DeliveryMapper.INSTANCE.updateEntityWithDTO(requestDTO, delivery);
         deliveryHelper.setupDelivery(requestDTO, delivery);
+
+        return DeliveryMapper.INSTANCE.entityToDTO(deliveryRepository.save(delivery));
+    }
+
+    public DeliveryDTO updateDeliveryStatus(Long id, Long statusId)  {
+        Delivery delivery = deliveryRepository
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+
+        Status status = statusRepository.findById(statusId)
+                .orElseThrow(() -> new ResourceNotFoundException("Status", "Id", statusId));
+
+        delivery.setStatus(status);
 
         return DeliveryMapper.INSTANCE.entityToDTO(deliveryRepository.save(delivery));
     }
