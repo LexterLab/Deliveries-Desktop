@@ -65,8 +65,18 @@ public class LoginPanel extends JPanel {
         signupButton.setFont(new Font("Arial", Font.BOLD, 14));
         signupButton.setBackground(new Color(51, 102, 255));
         signupButton.setForeground(Color.WHITE);
-        signupButton.addActionListener(e -> JOptionPane
-                .showMessageDialog(LoginPanel.this, "Sign Up dialog would open here."));
+        signupButton.addActionListener(e -> {
+            SignUpPanel signUpPanel = new SignUpPanel();
+
+
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Sign Up");
+            dialog.setModal(true);
+            dialog.setContentPane(signUpPanel);
+            dialog.pack();
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+        });
         return signupButton;
     }
 
@@ -87,7 +97,7 @@ public class LoginPanel extends JPanel {
                 String errorMessage = ex.getResponseBodyAsString();
 
                 JOptionPane.showMessageDialog(LoginPanel.this, ErrorFormatter
-                        .formatError(errorMessage)[1], "Login Error", JOptionPane.ERROR_MESSAGE);
+                        .formatError(errorMessage), "Login Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(LoginPanel.this, "An error occurred: " + exception
                         .getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
