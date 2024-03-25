@@ -1,8 +1,8 @@
 package com.tuvarna.delivery.utils;
 
 public class ErrorFormatter {
-    public static String[] formatError(String errorMessage) {
+    public static String formatError(String errorMessage) {
         return errorMessage
-                .replace("{","").replace("}", "").split(":");
+                .replace("{","").replace("}", "").split(":")[1];
     }
 }
