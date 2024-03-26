@@ -1,4 +1,4 @@
-package com.tuvarna.delivery.authentication.gui;
+package com.tuvarna.delivery.gui;
 
 import java.util.prefs.Preferences;
 

@@ -1,4 +1,4 @@
-package com.tuvarna.delivery.authentication.gui;
+package com.tuvarna.delivery.gui.service;
 
 import com.tuvarna.delivery.authentication.payload.request.LoginRequestDTO;
 import com.tuvarna.delivery.authentication.payload.request.SignUpRequestDTO;

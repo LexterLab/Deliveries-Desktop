@@ -1,6 +1,7 @@
-package com.tuvarna.delivery.authentication.gui;
+package com.tuvarna.delivery.gui.panel;
 
 import com.tuvarna.delivery.authentication.payload.request.SignUpRequestDTO;
+import com.tuvarna.delivery.gui.service.AuthService;
 import com.tuvarna.delivery.utils.ErrorFormatter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
