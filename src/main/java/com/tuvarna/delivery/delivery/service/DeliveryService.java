@@ -41,13 +41,13 @@ public class DeliveryService {
         return requestDTO;
     }
 
-    public DeliveryResponse retrieveAndFilterDeliveries(String username, String statusName, int pageNo, int pageSize, String sortBy, String sortDir) {
+    public DeliveryResponse retrieveAndFilterDeliveries(String username, Long statusId, int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
-        Page<Delivery> deliveries = deliveryRepository.findAndFilterDeliveries(username, statusName, pageable);
+        Page<Delivery> deliveries = deliveryRepository.findAndFilterDeliveries(username, statusId, pageable);
 
         return deliveryHelper.getDeliveryResponse(deliveries);
     }

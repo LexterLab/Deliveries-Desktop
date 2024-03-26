@@ -66,13 +66,13 @@ public class DeliveryController {
             name = "Bearer Authentication"
     )
     public ResponseEntity<DeliveryResponse> getAllDeliveriesFiltered(
-            @RequestParam(value = "status", required = false) StatusType type,
+            @Schema(example = "1") @RequestParam(value = "statusId", required = false) Long statusId,
             @Schema(example = "user") @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir) {
-            return ResponseEntity.ok(deliveryService.retrieveAndFilterDeliveries(username, type.getName(), pageNo, pageSize, sortBy, sortDir));
+            return ResponseEntity.ok(deliveryService.retrieveAndFilterDeliveries(username, statusId, pageNo, pageSize, sortBy, sortDir));
     }
 
 

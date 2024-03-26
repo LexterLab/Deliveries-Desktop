@@ -14,6 +14,6 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
     @Query("SELECT d FROM Delivery d " +
             "WHERE (:username IS NULL OR d.user.username = :username) " +
-            "AND (:statusName IS NULL OR d.status.type = :statusName) ")
-    Page<Delivery> findAndFilterDeliveries(String username, String statusName, Pageable pageable);
+            "AND (:statusId IS NULL OR d.status.id = :statusId) ")
+    Page<Delivery> findAndFilterDeliveries(String username, Long statusId, Pageable pageable);
 }
