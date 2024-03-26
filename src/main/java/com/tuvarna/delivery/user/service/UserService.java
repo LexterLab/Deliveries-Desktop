@@ -46,6 +46,13 @@ public class UserService {
         return UserMapper.INSTANCE.entityToDTO(user);
     }
 
+    public UserDTO retrieveUserInfo(String username) {
+        User user = userRepository.findUserByUsernameIgnoreCase(username)
+                .orElseThrow(()-> new ResourceNotFoundException("User", "username", username));
+
+        return UserMapper.INSTANCE.entityToDTO(user);
+    }
+
     public UserResponseDTO retrieveAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();

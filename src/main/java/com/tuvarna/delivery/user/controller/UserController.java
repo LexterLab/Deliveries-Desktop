@@ -64,6 +64,27 @@ public class UserController {
     }
 
     @Operation(
+            summary = "Get User Info REST API",
+            description = "Get User Info REST API is used to retrieve authenticated user info"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "200", description = "Http Status 200 SUCCESS"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 404 NOT FOUND")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("info")
+    public ResponseEntity<UserDTO> getUserInfo(Authentication authentication) {
+        return ResponseEntity.ok(userService.retrieveUserInfo(authentication.getName()));
+    }
+
+
+
+    @Operation(
             summary = "Get User REST API",
             description = "Get User REST API is used to retrieve user by identifier"
     )
