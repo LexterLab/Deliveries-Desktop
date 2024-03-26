@@ -44,4 +44,11 @@ public class CourierDeliveryTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return columnNames[column];
     }
+
+    public DeliveryDTO getDeliveryAtRow(int rowIndex) {
+        if (rowIndex >= 0 && rowIndex < deliveries.size()) {
+            return deliveries.get(rowIndex);
+        }
+        return null;
+    }
 }

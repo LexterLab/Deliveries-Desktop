@@ -15,6 +15,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Timer;
 import java.util.*;
@@ -108,6 +110,23 @@ public class CourierPanel extends JPanel {
 
         CourierDeliveryTableModel tableModel = new CourierDeliveryTableModel(deliveries);
         deliveryTable = new JTable(tableModel);
+
+        deliveryTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    if (row != -1) {
+                        DeliveryDTO deliveryDTO = ((CourierDeliveryTableModel) deliveryTable.getModel()).getDeliveryAtRow(row);
+                        if (deliveryDTO != null) {
+
+                            openDeliveryInfoPanel(deliveryDTO);
+                        }
+                    }
+                }
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(deliveryTable);
         centerPanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -140,6 +159,7 @@ public class CourierPanel extends JPanel {
             AccessTokenStorage.removeAccessToken();
             Window window = SwingUtilities.getWindowAncestor(this);
             window.dispose();
+
         });
         bottomPanel.add(signOutButton);
         return bottomPanel;
@@ -165,6 +185,18 @@ public class CourierPanel extends JPanel {
     public void setTableData(List<DeliveryDTO> deliveries) {
         CourierDeliveryTableModel tableModel = new CourierDeliveryTableModel(deliveries);
         deliveryTable.setModel(tableModel);
+    }
+
+    private void openDeliveryInfoPanel(DeliveryDTO deliveryDTO) {
+        DeliveryInfoPanel deliveryInfoPanel = new DeliveryInfoPanel(deliveryDTO);
+
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Delivery Information");
+        dialog.setModal(true);
+        dialog.setContentPane(deliveryInfoPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
 }
