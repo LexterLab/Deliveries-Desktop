@@ -14,4 +14,9 @@ public class AccessTokenStorage {
         Preferences prefs = Preferences.userNodeForPackage(AccessTokenStorage.class);
         return prefs.get(ACCESS_TOKEN_KEY, null);
     }
+
+    public static void removeAccessToken() {
+        Preferences prefs = Preferences.userNodeForPackage(AccessTokenStorage.class);
+        prefs.remove(ACCESS_TOKEN_KEY);
+    }
 }
