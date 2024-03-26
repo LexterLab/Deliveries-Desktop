@@ -2,8 +2,10 @@ package com.tuvarna.delivery.bootstrap;
 
 import com.tuvarna.delivery.city.model.City;
 import com.tuvarna.delivery.city.repository.CityRepository;
+import com.tuvarna.delivery.delivery.model.Delivery;
 import com.tuvarna.delivery.delivery.model.Status;
 import com.tuvarna.delivery.delivery.model.constant.StatusType;
+import com.tuvarna.delivery.delivery.repository.DeliveryRepository;
 import com.tuvarna.delivery.delivery.repository.StatusRepository;
 import com.tuvarna.delivery.office.model.Courier;
 import com.tuvarna.delivery.office.model.Office;
@@ -21,7 +23,7 @@ import java.util.Set;
 public class BootstrapHelper {
     public static void setUp(RoleRepository roleRepository, UserRepository userRepository, CityRepository cityRepository,
                              StatusRepository statusRepository, CourierRepository courierRepository,
-                             OfficeRepository officeRepository) {
+                             OfficeRepository officeRepository, DeliveryRepository deliveryRepository) {
         Role adminRole = new Role();
         Role userRole = new Role();
         Role courierRole = new Role();
@@ -78,6 +80,18 @@ public class BootstrapHelper {
         shipping.setType(StatusType.SHIPPING);
 
         statusRepository.saveAll(List.of(waiting, shipped, shipping));
+
+        Delivery delivery = new Delivery();
+        delivery.setStatus(waiting);
+        delivery.setUser(user);
+        delivery.setDetails("Optional info");
+        delivery.setFromCity(varna);
+        delivery.setToCity(sofia);
+        delivery.setTotalPrice(50.00);
+        delivery.setWeightKG(1.00);
+        delivery.setProductName("Laptop");
+
+        deliveryRepository.saveAll(List.of(delivery));
 
         Office office = new Office();
         office.setCity(varna);
