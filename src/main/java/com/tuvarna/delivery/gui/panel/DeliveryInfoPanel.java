@@ -74,9 +74,7 @@ public class DeliveryInfoPanel extends JPanel {
 
 
         JButton updateButton = new JButton("Update");
-        updateButton.addActionListener(e -> {
-            updateDelivery(deliveryDTO);
-        });
+        updateButton.addActionListener(e -> updateDelivery(deliveryDTO));
 
         add(weightLabel);
         add(weightField);
