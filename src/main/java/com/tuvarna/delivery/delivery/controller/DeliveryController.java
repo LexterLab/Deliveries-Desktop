@@ -115,7 +115,7 @@ public class DeliveryController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("{deliveryId}")
+    @PutMapping("{deliveryId}")
     @PreAuthorize("hasAnyRole('COURIER', 'ADMIN')")
     @Operation(
             summary = "Update Delivery REST API",
@@ -134,7 +134,7 @@ public class DeliveryController {
                                                         @RequestBody @Valid DeliveryRequestDTO requestDTO) {
         return ResponseEntity.ok(deliveryService.updateDelivery(deliveryId, requestDTO));
     }
-    @PatchMapping("{deliveryId}/status/{statusId}")
+    @PutMapping("{deliveryId}/statuses/{statusId}")
     @PreAuthorize("hasAnyRole('COURIER', 'ADMIN')")
     @Operation(
             summary = "Update Delivery Status REST API",
