@@ -19,6 +19,7 @@ public interface CourierMapper {
     UpdateCourierRequestDTO entityToDTO(Courier courier);
 
     @Mapping(expression = "java(courier.getOffice().getId())", target = "officeId")
+    @Mapping(expression = "java(courier.getOffice().getName())", target = "officeName")
     @Mapping(expression = "java(courier.getUser().getId())", target = "userId")
     @Mapping(expression = "java(courier.getUser().getFirstName())", target = "firstName")
     @Mapping(expression = "java(courier.getUser().getLastName())", target = "lastName")

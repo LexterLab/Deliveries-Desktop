@@ -6,6 +6,7 @@ public record CourierDTO(
         Integer yearsOfExperience,
         Long userId,
         Long officeId,
+        String officeName,
         String firstName,
         String lastName
 ) {
