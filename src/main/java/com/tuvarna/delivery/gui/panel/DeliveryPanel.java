@@ -157,6 +157,8 @@ public class DeliveryPanel extends JPanel {
         signOutButton.setFont(new Font("Arial", Font.BOLD, 14));
         signOutButton.setBackground(new Color(153, 0, 23));
         signOutButton.setForeground(Color.WHITE);
+        signOutButton.setOpaque(true);
+        signOutButton.setBorderPainted(false);
         signOutButton.addActionListener(e -> {
             AccessTokenStorage.removeAccessToken();
             Window window = SwingUtilities.getWindowAncestor(this);

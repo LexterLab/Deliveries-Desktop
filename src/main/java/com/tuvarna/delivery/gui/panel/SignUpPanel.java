@@ -125,6 +125,8 @@ public class SignUpPanel extends JPanel {
         signUpButton.setFont(new Font("Arial", Font.BOLD, 14));
         signUpButton.setBackground(new Color(51, 102, 255));
         signUpButton.setForeground(Color.WHITE);
+        signUpButton.setOpaque(true);
+        signUpButton.setBorderPainted(false);
         signUpButton.addActionListener(e -> {
             String username = usernameField.getText();
             char[] passwordChars = passwordField.getPassword();

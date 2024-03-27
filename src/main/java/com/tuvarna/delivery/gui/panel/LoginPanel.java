@@ -66,6 +66,8 @@ public class LoginPanel extends JPanel {
         JButton signupButton = new JButton("Sign Up");
         signupButton.setFont(new Font("Arial", Font.BOLD, 14));
         signupButton.setBackground(new Color(51, 102, 255));
+        signupButton.setOpaque(true);
+        signupButton.setBorderPainted(false);
         signupButton.setForeground(Color.WHITE);
         signupButton.addActionListener(e -> {
             SignUpPanel signUpPanel = new SignUpPanel();
@@ -86,6 +88,8 @@ public class LoginPanel extends JPanel {
         JButton loginButton = new JButton("Login");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
         loginButton.setBackground(new Color(0, 153, 51));
+        loginButton.setOpaque(true);
+        loginButton.setBorderPainted(false);
         loginButton.setForeground(Color.WHITE);
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
@@ -120,10 +124,6 @@ public class LoginPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        UIManager.put("Button.font", new Font("Arial", Font.BOLD, 14));
-        UIManager.put("Button.background", new Color(0, 153, 51));
-        UIManager.put("Button.foreground", Color.WHITE);
-
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Login Panel");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
