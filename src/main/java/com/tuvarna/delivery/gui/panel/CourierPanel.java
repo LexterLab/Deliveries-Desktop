@@ -80,13 +80,13 @@ public class CourierPanel extends JPanel {
         deliveryStatusComboBox = new JComboBox<>(statusOptions);
         deliveryStatusComboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println(deliveryStatusComboBox.getSelectedIndex());
                 if (getSelectedDeliveryStatus() > 0) {
                     selectedStatusId = deliveryStatusComboBox.getSelectedIndex();
 
                     fetchDeliveries(selectedUsername, selectedStatusId);
                 } else {
-                    fetchDeliveries(selectedUsername, null);
+                    selectedStatusId = 0;
+                    fetchDeliveries(selectedUsername, selectedStatusId);
                 }
             }
         });
@@ -120,7 +120,6 @@ public class CourierPanel extends JPanel {
                     if (row != -1) {
                         DeliveryDTO deliveryDTO = ((CourierDeliveryTableModel) deliveryTable.getModel()).getDeliveryAtRow(row);
                         if (deliveryDTO != null) {
-
                             openDeliveryInfoPanel(deliveryDTO);
                         }
                     }
@@ -137,14 +136,17 @@ public class CourierPanel extends JPanel {
 
         add(bottomPanel, BorderLayout.SOUTH);
 
+
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 fetchDeliveries(selectedUsername, selectedStatusId);
             }
-        }, 0, 60000);
+        }, 0, 3000);
 
+
+        fetchDeliveries(null, null);
     }
 
     private JPanel getBottomPanel() {
