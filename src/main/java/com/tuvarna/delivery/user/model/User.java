@@ -1,5 +1,6 @@
 package com.tuvarna.delivery.user.model;
 
+import com.tuvarna.delivery.delivery.model.Delivery;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,9 @@ public class User {
     private String phoneNumber;
     @Column(nullable = false)
     private String address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Delivery> deliveries;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role",
