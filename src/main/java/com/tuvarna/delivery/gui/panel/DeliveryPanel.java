@@ -4,7 +4,7 @@ import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.delivery.payload.response.StatusDTO;
 import com.tuvarna.delivery.gui.AccessTokenStorage;
-import com.tuvarna.delivery.gui.model.CourierDeliveryTableModel;
+import com.tuvarna.delivery.gui.model.DeliveryTableModel;
 import com.tuvarna.delivery.gui.service.DeliveryService;
 import com.tuvarna.delivery.gui.service.StatusService;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.*;
 
-public class CourierPanel extends JPanel {
+public class DeliveryPanel extends JPanel {
     private final JComboBox<String> deliveryStatusComboBox;
     private final JTextField searchTextField;
     private final JTable deliveryTable;
@@ -29,7 +29,7 @@ public class CourierPanel extends JPanel {
     private String selectedUsername;
 
 
-    public CourierPanel() {
+    public DeliveryPanel() {
 
         setLayout(new BorderLayout());
         setBackground(new Color(70, 64, 64));
@@ -108,7 +108,7 @@ public class CourierPanel extends JPanel {
         List<DeliveryDTO> deliveries = new ArrayList<>();
 
 
-        CourierDeliveryTableModel tableModel = new CourierDeliveryTableModel(deliveries);
+        DeliveryTableModel tableModel = new DeliveryTableModel(deliveries);
         deliveryTable = new JTable(tableModel);
 
         deliveryTable.addMouseListener(new MouseAdapter() {
@@ -118,7 +118,7 @@ public class CourierPanel extends JPanel {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     if (row != -1) {
-                        DeliveryDTO deliveryDTO = ((CourierDeliveryTableModel) deliveryTable.getModel()).getDeliveryAtRow(row);
+                        DeliveryDTO deliveryDTO = ((DeliveryTableModel) deliveryTable.getModel()).getDeliveryAtRow(row);
                         if (deliveryDTO != null) {
                             openDeliveryInfoPanel(deliveryDTO);
                         }
@@ -185,7 +185,7 @@ public class CourierPanel extends JPanel {
     }
 
     public void setTableData(List<DeliveryDTO> deliveries) {
-        CourierDeliveryTableModel tableModel = new CourierDeliveryTableModel(deliveries);
+        DeliveryTableModel tableModel = new DeliveryTableModel(deliveries);
         deliveryTable.setModel(tableModel);
     }
 

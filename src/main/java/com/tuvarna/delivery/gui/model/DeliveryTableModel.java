@@ -5,11 +5,11 @@ import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-public class CourierDeliveryTableModel extends AbstractTableModel {
+public class DeliveryTableModel extends AbstractTableModel {
     private final List<DeliveryDTO> deliveries;
     private final String[] columnNames = {"Number", "Username", "Status", "From", "To", "Weight", "Product", "Total Price", "Ordered At"};
 
-    public CourierDeliveryTableModel(List<DeliveryDTO> deliveries) {
+    public DeliveryTableModel(List<DeliveryDTO> deliveries) {
         this.deliveries = deliveries;
     }
 
