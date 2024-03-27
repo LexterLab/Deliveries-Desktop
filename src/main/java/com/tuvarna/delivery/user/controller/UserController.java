@@ -137,7 +137,7 @@ public class UserController {
             name = "Bearer Authentication"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("{userId}")
+    @PutMapping("{userId}")
     public ResponseEntity<UserDTO> updateUserById(@Schema(example = "2") @PathVariable Long userId,
                                                   @RequestBody @Valid UserRequestDTO requestDTO) {
         return ResponseEntity.ok(userService.updateUserInfo(userId, requestDTO));
