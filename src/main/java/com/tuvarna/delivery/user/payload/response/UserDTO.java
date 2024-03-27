@@ -8,6 +8,8 @@ import java.util.Set;
 public record UserDTO(
         @Schema(example = "1")
         Long id,
+        @Schema(example = "user")
+        String username,
         @Schema(example = "User")
         String firstName,
         @Schema(example = "User")
