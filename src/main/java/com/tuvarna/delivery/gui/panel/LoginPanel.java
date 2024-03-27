@@ -95,6 +95,16 @@ public class LoginPanel extends JPanel {
             try {
                 ResponseEntity<JWTAuthenticationResponse> response = service.fetchSignIn(new LoginRequestDTO(username, password));
                 AccessTokenStorage.storeAccessToken(Objects.requireNonNull(response.getBody()).getAccessToken());
+                UserPanel signUpPanel = new UserPanel();
+
+
+                JDialog dialog = new JDialog();
+                dialog.setTitle("Sign Up");
+                dialog.setModal(true);
+                dialog.setContentPane(signUpPanel);
+                dialog.pack();
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
             } catch (HttpClientErrorException ex) {
                 String errorMessage = ex.getResponseBodyAsString();
 
@@ -110,6 +120,10 @@ public class LoginPanel extends JPanel {
     }
 
     public static void main(String[] args) {
+        UIManager.put("Button.font", new Font("Arial", Font.BOLD, 14));
+        UIManager.put("Button.background", new Color(0, 153, 51));
+        UIManager.put("Button.foreground", Color.WHITE);
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Login Panel");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
