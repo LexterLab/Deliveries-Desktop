@@ -36,7 +36,7 @@ public class CityController {
     @SecurityRequirement(
             name = "Bearer Authentication"
     )
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'COURIER')")
     @GetMapping("")
     public ResponseEntity<List<CityDTO>> retrieveAllCities() {
         return ResponseEntity.ok(cityService.getAllCities());
