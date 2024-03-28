@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "offices")
 @AllArgsConstructor
@@ -24,6 +26,8 @@ public class Office {
     private String name;
     @Column(nullable = false, unique = true)
     private String phoneNumber;
+    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL)
+    private Set<Courier> couriers;
     @Transient
     private Integer numberOfEmployees;
 
