@@ -1,6 +1,7 @@
 package com.tuvarna.delivery.gui.service;
 
 import com.tuvarna.delivery.gui.AccessTokenStorage;
+import com.tuvarna.delivery.office.payload.request.CourierRequestDTO;
 import com.tuvarna.delivery.office.payload.request.UpdateCourierRequestDTO;
 import com.tuvarna.delivery.office.payload.response.CourierResponseDTO;
 import com.tuvarna.delivery.utils.AppConstants;
@@ -29,7 +30,7 @@ public class CourierService {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
-        String url = AppConstants.DOMAIN + "offices/" + officeId + "/couriers" + courierId;
+        String url = AppConstants.DOMAIN + "offices/" + officeId + "/couriers/" + courierId;
 
         return restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
     }
@@ -45,7 +46,20 @@ public class CourierService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = AppConstants.DOMAIN + "offices/" + officeId + "/couriers" + courierId;
+        String url = AppConstants.DOMAIN + "offices/" + officeId + "/couriers/" + courierId;
         return restTemplate.exchange(url, HttpMethod.PUT, entity, UpdateCourierRequestDTO.class);
-}
+    }
+
+    public ResponseEntity<CourierRequestDTO> fetchEnlistCourier(Long officeId, CourierRequestDTO requestDTO) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(AccessTokenStorage.retrieveAccessToken());
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<CourierRequestDTO> entity = new HttpEntity<>(requestDTO, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = AppConstants.DOMAIN + "offices/" + officeId + "/couriers";
+        return restTemplate.exchange(url, HttpMethod.POST, entity, CourierRequestDTO.class);
+    }
 }
