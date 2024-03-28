@@ -3,7 +3,6 @@ package com.tuvarna.delivery.gui.panel;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.delivery.payload.response.StatusDTO;
-import com.tuvarna.delivery.gui.AccessTokenStorage;
 import com.tuvarna.delivery.gui.model.DeliveryTableModel;
 import com.tuvarna.delivery.gui.service.DeliveryService;
 import com.tuvarna.delivery.gui.service.StatusService;
@@ -153,19 +152,15 @@ public class DeliveryPanel extends JPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(new Color(70, 64, 64));
 
-        JButton signOutButton = new JButton("Sign Out");
-        signOutButton.setFont(new Font("Arial", Font.BOLD, 14));
-        signOutButton.setBackground(new Color(153, 0, 23));
-        signOutButton.setForeground(Color.WHITE);
-        signOutButton.setOpaque(true);
-        signOutButton.setBorderPainted(false);
-        signOutButton.addActionListener(e -> {
-            AccessTokenStorage.removeAccessToken();
-            Window window = SwingUtilities.getWindowAncestor(this);
-            window.dispose();
 
-        });
-        bottomPanel.add(signOutButton);
+        JButton statsButton = new JButton("Statistics");
+        statsButton.setFont(new Font("Arial", Font.BOLD, 14));
+        statsButton.setBackground(new Color(113, 217, 179));
+        statsButton.setForeground(Color.WHITE);
+        statsButton.setOpaque(true);
+        statsButton.setBorderPainted(false);
+        statsButton.addActionListener(e -> openDeliveryStatsPanel());
+        bottomPanel.add(statsButton);
         return bottomPanel;
     }
 
@@ -198,6 +193,18 @@ public class DeliveryPanel extends JPanel {
         dialog.setTitle("Delivery Information");
         dialog.setModal(true);
         dialog.setContentPane(deliveryInfoPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void openDeliveryStatsPanel() {
+        DeliveryStatsPanel deliveryStatsPanel = new DeliveryStatsPanel();
+
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Delivery Information");
+        dialog.setModal(true);
+        dialog.setContentPane(deliveryStatsPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
