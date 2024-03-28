@@ -9,6 +9,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Timer;
 import java.util.*;
@@ -32,7 +34,33 @@ public class CourierPanel extends JPanel {
         centerPanel.add(scrollPane, BorderLayout.CENTER);
         add(centerPanel, BorderLayout.CENTER);
 
-        java.util.Timer timer = new Timer();
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.setBackground(new Color(70, 64, 64));
+
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(e -> openAddCourierPanel());
+
+        bottomPanel.add(addButton);
+
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        courierTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    if (row != -1) {
+                        CourierDTO courierDTO = ((CourierTableModel) courierTable.getModel()).getCourierAtRow(row);
+                        if (courierDTO != null) {
+                            openCourierInfoPanel(courierDTO);
+                        }
+                    }
+                }
+            }
+        });
+
+        Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -64,6 +92,18 @@ public class CourierPanel extends JPanel {
         dialog.setTitle("Courier Information");
         dialog.setModal(true);
         dialog.setContentPane(courierInfoPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void openAddCourierPanel() {
+        AddCourierPanel addCourierPanel = new AddCourierPanel();
+
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Courier Creation");
+        dialog.setModal(true);
+        dialog.setContentPane(addCourierPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
