@@ -81,7 +81,7 @@ public class OfficeController {
             name = "Bearer Authentication"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("{officeId}/couriers/{courierId}")
+    @PutMapping("{officeId}/couriers/{courierId}")
     public ResponseEntity<UpdateCourierRequestDTO> updateCourierData(@Schema(example = "1") @PathVariable Long officeId,
                                                                      @Schema(example = "1") @PathVariable Long courierId,
                                                                      @RequestBody @Valid UpdateCourierRequestDTO requestDTO) {
