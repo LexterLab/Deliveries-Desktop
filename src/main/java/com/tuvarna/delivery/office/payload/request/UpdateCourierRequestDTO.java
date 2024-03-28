@@ -5,6 +5,17 @@ import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
 public record UpdateCourierRequestDTO(
+        @Schema(example = "James")
+        @NotEmpty(message = "Please enter a first name.")
+        @Length(min = 1, max = 50, message = "First name must not exceed 50 characters.")
+        @Pattern(regexp = "^[A-Za-z'-. ]{1,50}$", message = "Please enter a valid first name.")
+        String firstName,
+
+        @Schema(example = "Bond")
+        @NotEmpty(message = "Please enter a last name.")
+        @Length(min = 1, max = 50, message = "Last name must not exceed 50 characters.")
+        @Pattern(regexp = "^[A-Za-z'-. ]{1,50}$", message = "Please enter a valid last name.")
+        String lastName,
         @Schema(example = "+359888123456")
         @NotEmpty(message = "Please enter a phone number.")
         @Pattern(regexp ="^\\+?[1-9][0-9]{7,14}$", message = "Please enter a valid phone number.")
