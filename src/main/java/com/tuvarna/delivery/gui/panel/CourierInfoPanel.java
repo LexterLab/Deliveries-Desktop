@@ -18,7 +18,6 @@ public class CourierInfoPanel extends JPanel {
     private final CourierDTO courierDTO;
     private final JTextField firstNameField;
     private final JTextField lastNameField;
-    private final JTextField officeField;
     private final JTextField phoneNumberField;
     private final JTextField experienceField;
     private final JComboBox<String> officeComboBox;
@@ -43,7 +42,6 @@ public class CourierInfoPanel extends JPanel {
         JLabel experienceLabel = new JLabel("Experience");
         experienceLabel.setForeground(Color.WHITE);
 
-        officeField = new JTextField(courierDTO.officeName(), 10);
         firstNameField = new JTextField(courierDTO.firstName(),10);
         lastNameField = new JTextField(courierDTO.lastName(),20);
         phoneNumberField = new JTextField(courierDTO.workPhoneNumber(),20);
@@ -51,7 +49,7 @@ public class CourierInfoPanel extends JPanel {
 
         officeComboBox = new JComboBox<>();
         fetchOffices();
-        setSelectedItem(courierDTO.officeName(), officeComboBox);
+        setSelectedItem(officeComboBox);
 
         JButton updateButton = new JButton("Update");
         updateButton.addActionListener(e -> updateCourier());
@@ -60,7 +58,7 @@ public class CourierInfoPanel extends JPanel {
         deleteButton.addActionListener(e -> deleteCourier());
 
         add(officeLabel);
-        add(officeField);
+        add(officeComboBox);
         add(firstNameLabel);
         add(firstNameField);
         add(lastNameLabel);
@@ -84,6 +82,8 @@ public class CourierInfoPanel extends JPanel {
             ResponseEntity<UpdateCourierRequestDTO> response = courierService
                     .fetchUpdateCourier(courierDTO.officeId(), courierDTO.id(),
                             new UpdateCourierRequestDTO(firstName, lastName, phoneNumber, experience, officeId));
+            JOptionPane.showMessageDialog(this, "Updated successfully",
+                    "Updated successfully", JOptionPane.INFORMATION_MESSAGE);
         } catch (HttpClientErrorException e) {
             String errorMessage = e.getResponseBodyAsString();
             JOptionPane.showMessageDialog(this, ErrorFormatter
@@ -92,7 +92,18 @@ public class CourierInfoPanel extends JPanel {
     }
 
     public void deleteCourier() {
-
+        try {
+            int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure?", "DELETION WARNING", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (confirmation == JOptionPane.OK_OPTION) {
+                ResponseEntity<Void> response = courierService.fetchDeleteCourier(courierDTO.officeId(), courierDTO.id());
+                JOptionPane.showMessageDialog(this, "Deleted successfully", "Deleted successfully", JOptionPane.INFORMATION_MESSAGE);
+                Window window = SwingUtilities.getWindowAncestor(this);
+                window.dispose();
+            }
+        } catch (HttpClientErrorException e) {
+            String errorMessage = e.getResponseBodyAsString();
+            JOptionPane.showMessageDialog(this, ErrorFormatter.formatError(errorMessage), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void fetchOffices() {
@@ -111,11 +122,8 @@ public class CourierInfoPanel extends JPanel {
         }
     }
 
-    private void setSelectedItem(String name, JComboBox<String> comboBox) {
-        for (int i = 0; i < comboBox.getItemCount(); i++) {
-            if (comboBox.getItemAt(i).equalsIgnoreCase(name)) {
-                comboBox.setSelectedIndex(i);
-            }
+    private void setSelectedItem(JComboBox<String> comboBox) {
+            comboBox.setSelectedIndex((int) (courierDTO.id() - 1));
         }
     }
-}
+
