@@ -4,10 +4,12 @@ import com.tuvarna.delivery.exception.ResourceNotFoundException;
 import com.tuvarna.delivery.office.model.Courier;
 import com.tuvarna.delivery.office.model.Office;
 import com.tuvarna.delivery.office.payload.mapper.CourierMapper;
+import com.tuvarna.delivery.office.payload.mapper.OfficeMapper;
 import com.tuvarna.delivery.office.payload.request.CourierRequestDTO;
 import com.tuvarna.delivery.office.payload.request.UpdateCourierRequestDTO;
 import com.tuvarna.delivery.office.payload.response.CourierDTO;
 import com.tuvarna.delivery.office.payload.response.CourierResponseDTO;
+import com.tuvarna.delivery.office.payload.response.OfficeDTO;
 import com.tuvarna.delivery.office.repository.CourierRepository;
 import com.tuvarna.delivery.office.repository.OfficeRepository;
 import com.tuvarna.delivery.office.service.helper.CourierHelper;
@@ -19,6 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +65,15 @@ public class OfficeService {
         Office office = officeRepository.findById(requestDTO.officeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Office", "id", requestDTO.officeId()));
 
+        User user = userRepository.findUserByUsernameIgnoreCase(courier.getUser().getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", courier.getUser().getUsername()));
+
+        user.setFirstName(requestDTO.firstName());
+        user.setLastName(requestDTO.lastName());
+
+        userRepository.save(user);
+
+        courier.setUser(user);
         CourierMapper.INSTANCE.updateEntityWithDTO(requestDTO, courier);
         courier.setOffice(office);
 
@@ -83,6 +96,11 @@ public class OfficeService {
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
         return courierHelper.getCourierResponse(courierRepository.findAllByOfficeId(officeId, pageable));
+    }
+
+
+    public List<OfficeDTO> getAllOffices() {
+        return OfficeMapper.INSTANCE.entityToDTO(officeRepository.findAll());
     }
 
 }
