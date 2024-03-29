@@ -26,10 +26,11 @@ public class DeliveryPanel extends JPanel {
     private final JTable deliveryTable;
     private long selectedStatusId;
     private String selectedUsername;
+    private final boolean isAdmin;
 
 
-    public DeliveryPanel() {
-
+    public DeliveryPanel(boolean isAdmin) {
+        this.isAdmin = isAdmin;
         setLayout(new BorderLayout());
         setBackground(new Color(70, 64, 64));
 
@@ -187,7 +188,7 @@ public class DeliveryPanel extends JPanel {
     }
 
     private void openDeliveryInfoPanel(DeliveryDTO deliveryDTO) {
-        DeliveryInfoPanel deliveryInfoPanel = new DeliveryInfoPanel(deliveryDTO);
+        DeliveryInfoPanel deliveryInfoPanel = new DeliveryInfoPanel(deliveryDTO, isAdmin);
 
         JDialog dialog = new JDialog();
         dialog.setTitle("Delivery Information");

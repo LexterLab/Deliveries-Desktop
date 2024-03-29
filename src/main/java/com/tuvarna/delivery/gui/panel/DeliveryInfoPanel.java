@@ -24,7 +24,7 @@ public class DeliveryInfoPanel extends JPanel {
     private final JComboBox<String> toCityComboBox;
     private final JComboBox<String> statusComboBox;
 
-    public DeliveryInfoPanel(DeliveryDTO deliveryDTO) {
+    public DeliveryInfoPanel(DeliveryDTO deliveryDTO, boolean isAdmin) {
         setLayout(new GridLayout(0, 2, 5, 5));
         setBackground(new Color(70, 64, 64));
 
@@ -76,6 +76,10 @@ public class DeliveryInfoPanel extends JPanel {
         JButton updateButton = new JButton("Update");
         updateButton.addActionListener(e -> updateDelivery(deliveryDTO));
 
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.setVisible(isAdmin);
+
+
         add(weightLabel);
         add(weightField);
         add(totalPriceLabel);
@@ -91,6 +95,7 @@ public class DeliveryInfoPanel extends JPanel {
         add(statusLabel);
         add(statusComboBox);
         add(updateButton);
+        add(deleteButton);
     }
 
 

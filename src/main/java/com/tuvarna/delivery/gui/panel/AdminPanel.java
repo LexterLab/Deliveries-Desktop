@@ -41,7 +41,7 @@ public class AdminPanel extends JPanel {
     }
 
     private void openDeliveryPanel() {
-        DeliveryPanel deliveryPanel = new DeliveryPanel();
+        DeliveryPanel deliveryPanel = new DeliveryPanel(true);
 
         showDialog(deliveryPanel, "Delivery Information");
     }
