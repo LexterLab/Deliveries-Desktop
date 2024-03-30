@@ -23,6 +23,7 @@ public class DeliveryInfoPanel extends JPanel {
     private final JComboBox<String> fromCityComboBox;
     private final JComboBox<String> toCityComboBox;
     private final JComboBox<String> statusComboBox;
+    private final DeliveryService deliveryService = new DeliveryService();
 
     public DeliveryInfoPanel(DeliveryDTO deliveryDTO, boolean isAdmin) {
         setLayout(new GridLayout(0, 2, 5, 5));
@@ -78,6 +79,7 @@ public class DeliveryInfoPanel extends JPanel {
 
         JButton deleteButton = new JButton("Delete");
         deleteButton.setVisible(isAdmin);
+        deleteButton.addActionListener(e -> deleteDelivery(deliveryDTO.id()));
 
 
         add(weightLabel);
@@ -168,7 +170,7 @@ public class DeliveryInfoPanel extends JPanel {
    }
 
     private void updateDelivery(DeliveryDTO deliveryDTO) {
-        DeliveryService deliveryService = new DeliveryService();
+
         try {
             Double weight = getWeightKG();
             Double totalPrice = getTotalPrice();
@@ -196,7 +198,26 @@ public class DeliveryInfoPanel extends JPanel {
             JOptionPane.showMessageDialog(this, ErrorFormatter
                     .formatError(errorMessage), "Server Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
+    private void deleteDelivery(Long deliveryId) {
+        try{
+            int confirmation = JOptionPane
+                    .showConfirmDialog(this, "Are you sure?", "DELETION WARNING",
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (confirmation == JOptionPane.OK_OPTION) {
+                ResponseEntity<Void> response = deliveryService.fetchDeleteDelivery(deliveryId);
+                JOptionPane
+                        .showMessageDialog(this, "Deleted successfully",
+                                "Deleted successfully", JOptionPane.INFORMATION_MESSAGE);
+                Window window = SwingUtilities.getWindowAncestor(this);
+                window.dispose();
+            }
 
+        } catch (HttpClientErrorException e) {
+            String errorMessage = e.getResponseBodyAsString();
+            JOptionPane.showMessageDialog(this, ErrorFormatter
+                    .formatError(errorMessage), "Server Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
