@@ -6,6 +6,7 @@ import com.tuvarna.delivery.delivery.payload.response.StatusDTO;
 import com.tuvarna.delivery.gui.model.DeliveryTableModel;
 import com.tuvarna.delivery.gui.service.DeliveryService;
 import com.tuvarna.delivery.gui.service.StatusService;
+import com.tuvarna.delivery.utils.ErrorFormatter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -171,7 +172,9 @@ public class DeliveryPanel extends JPanel {
             ResponseEntity<DeliveryResponse> response = service.fetchFilterDeliveries(username, statusId);
             setTableData(Objects.requireNonNull(response.getBody()).deliveries());
         } catch (HttpClientErrorException e) {
-            System.out.println("Failed to fetch deliveries: " + e.getMessage());
+            String errorMessage = e.getResponseBodyAsString();
+            JOptionPane.showMessageDialog(this, ErrorFormatter
+                    .formatError(errorMessage), "Server Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     public int getSelectedDeliveryStatus() {
