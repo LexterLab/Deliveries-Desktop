@@ -206,7 +206,7 @@ public class DeliveryPanel extends JPanel {
         DeliveryStatsPanel deliveryStatsPanel = new DeliveryStatsPanel();
 
         JDialog dialog = new JDialog();
-        dialog.setTitle("Delivery Information");
+        dialog.setTitle("Delivery Analytics");
         dialog.setModal(true);
         dialog.setContentPane(deliveryStatsPanel);
         dialog.pack();
