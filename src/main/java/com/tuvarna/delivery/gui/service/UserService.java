@@ -1,6 +1,6 @@
 package com.tuvarna.delivery.gui.service;
 
-import com.tuvarna.delivery.gui.AccessTokenStorage;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.user.payload.request.UserRequestDTO;
 import com.tuvarna.delivery.user.payload.response.UserDTO;
 import com.tuvarna.delivery.user.payload.response.UserResponseDTO;

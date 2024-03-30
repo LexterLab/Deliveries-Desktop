@@ -3,7 +3,7 @@ package com.tuvarna.delivery.gui.service;
 import com.tuvarna.delivery.delivery.payload.request.DeliveryRequestDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
-import com.tuvarna.delivery.gui.AccessTokenStorage;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.utils.AppConstants;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;

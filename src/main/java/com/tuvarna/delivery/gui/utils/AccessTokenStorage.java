@@ -1,4 +1,4 @@
-package com.tuvarna.delivery.gui;
+package com.tuvarna.delivery.gui.utils;
 
 import java.util.prefs.Preferences;
 

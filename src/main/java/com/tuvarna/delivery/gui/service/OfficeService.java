@@ -1,6 +1,6 @@
 package com.tuvarna.delivery.gui.service;
 
-import com.tuvarna.delivery.gui.AccessTokenStorage;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.office.payload.response.OfficeDTO;
 import com.tuvarna.delivery.utils.AppConstants;
 import org.springframework.core.ParameterizedTypeReference;

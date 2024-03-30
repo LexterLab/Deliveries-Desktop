@@ -1,7 +1,7 @@
 package com.tuvarna.delivery.gui.service;
 
 import com.tuvarna.delivery.city.payload.CityDTO;
-import com.tuvarna.delivery.gui.AccessTokenStorage;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.utils.AppConstants;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
