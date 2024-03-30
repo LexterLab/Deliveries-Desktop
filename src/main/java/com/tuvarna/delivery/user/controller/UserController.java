@@ -19,6 +19,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/users")
@@ -26,17 +28,32 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @Operation(summary = "W.I.P")
+    @PreAuthorize("hasRole('USER')")
+    @Operation(
+            summary = "Filter User deliveries REST API",
+            description = "Filter User deliveries REST API is used to retrieve and filter user deliveries"
+    )
+    @ApiResponses( value = {
+            @ApiResponse( responseCode = "200", description = "Http Status 200 SUCCESS"),
+            @ApiResponse( responseCode = "401", description = "Http Status 401 UNAUTHORIZED"),
+            @ApiResponse( responseCode = "403", description = "Http Status 403 FORBIDDEN"),
+            @ApiResponse( responseCode = "404", description = "Http Status 403 FORBIDDEN")
+    })
+    @SecurityRequirement(
+            name = "Bearer Authentication"
+    )
     @GetMapping("deliveries")
     public ResponseEntity<DeliveryResponse> getAllDeliveriesByUser
             (
                     Authentication authentication,
+                    @RequestParam(required = false) LocalDate afterDate,
                     @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
                     @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
                     @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
                     @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
             ) {
-        return ResponseEntity.ok(userService.retrieveUserDeliveries(authentication.getName(), pageNo, pageSize, sortBy, sortDir));
+        return ResponseEntity.ok(userService.retrieveUserDeliveries(authentication.getName(), afterDate, pageNo,
+                pageSize, sortBy, sortDir));
     }
     @Operation(
             summary = "Get All Users REST API",

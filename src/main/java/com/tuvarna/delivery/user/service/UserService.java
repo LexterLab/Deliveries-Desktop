@@ -21,6 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -31,16 +34,23 @@ public class UserService {
     private final UserHelper userHelper;
 
 
-    public DeliveryResponse retrieveUserDeliveries(String username, int pageNo, int pageSize, String sortBy, String sortDir) {
+    public DeliveryResponse retrieveUserDeliveries(String username, LocalDate afterDate, int pageNo, int pageSize, String sortBy, String sortDir) {
         User user = userRepository.findUserByUsernameIgnoreCase(username)
-                .orElseThrow(()-> new ResourceNotFoundException("User", "username", username));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        Page<Delivery> deliveries = deliveryRepository.findAllByUserUsername(user.getUsername(),pageable);
+
+        LocalDateTime convertedDate = null;
+        if(afterDate != null) {
+            convertedDate = LocalDateTime.of(afterDate.getYear(), afterDate.getMonth(),
+                    afterDate.getDayOfMonth(), 0, 0, 0, 0);
+        }
+
+        Page<Delivery> deliveries = deliveryRepository.findAndFilterUserDeliveries(user.getUsername(),convertedDate, pageable);
         return deliveryHelper.getDeliveryResponse(deliveries);
     }
 
