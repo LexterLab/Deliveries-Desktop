@@ -118,6 +118,15 @@ public class UserDeliveryPanel  extends JPanel {
         statsButton.setBorderPainted(false);
         statsButton.addActionListener(e -> openUserDeliveryStatsPanel());
         bottomPanel.add(statsButton);
+
+        JButton requestButton = new JButton("Request Delivery");
+        requestButton.setFont(new Font("Arial", Font.BOLD, 14));
+        requestButton.setBackground(new Color(137, 193, 255));
+        requestButton.setForeground(Color.WHITE);
+        requestButton.setOpaque(true);
+        requestButton.setBorderPainted(false);
+        requestButton.addActionListener(e -> openRequestDeliveryPanel());
+        bottomPanel.add(requestButton);
         return bottomPanel;
     }
 
@@ -166,6 +175,20 @@ public class UserDeliveryPanel  extends JPanel {
         dialog.setModal(true);
 
         dialog.setContentPane(userDeliveryStatsPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void openRequestDeliveryPanel() {
+        RequestDeliveryPanel requestDeliveryPanel = new RequestDeliveryPanel();
+
+
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Request Delivery");
+        dialog.setModal(true);
+
+        dialog.setContentPane(requestDeliveryPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
