@@ -110,7 +110,7 @@ public class DeliveryController {
     @SecurityRequirement(
             name = "Bearer Authentication"
     )
-    public ResponseEntity<Void> deleteRecipeById(@PathVariable @Schema(example = "1") Long deliveryId) {
+    public ResponseEntity<Void> deleteDeliveryById(@PathVariable @Schema(example = "1") Long deliveryId) {
         deliveryService.deleteDelivery(deliveryId);
         return ResponseEntity.noContent().build();
     }
@@ -130,7 +130,7 @@ public class DeliveryController {
     @SecurityRequirement(
             name = "Bearer Authentication"
     )
-    public ResponseEntity<DeliveryDTO> updateRecipeById(@PathVariable @Schema(example = "1") Long deliveryId,
+    public ResponseEntity<DeliveryDTO> updateDeliveryById(@PathVariable @Schema(example = "1") Long deliveryId,
                                                         @RequestBody @Valid DeliveryRequestDTO requestDTO) {
         return ResponseEntity.ok(deliveryService.updateDelivery(deliveryId, requestDTO));
     }
@@ -149,7 +149,7 @@ public class DeliveryController {
     @SecurityRequirement(
             name = "Bearer Authentication"
     )
-    public ResponseEntity<DeliveryDTO> updateRecipeStatus(@PathVariable @Schema(example = "1") Long deliveryId,
+    public ResponseEntity<DeliveryDTO> updateDeliveryStatus(@PathVariable @Schema(example = "1") Long deliveryId,
                                                           @PathVariable @Schema(example = "1") Long statusId) {
         return ResponseEntity.ok(deliveryService.updateDeliveryStatus(deliveryId, statusId));
     }
