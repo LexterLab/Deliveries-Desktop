@@ -93,7 +93,7 @@ public class UserController {
     @SecurityRequirement(
             name = "Bearer Authentication"
     )
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'COURIER')")
     @GetMapping("info")
     public ResponseEntity<UserDTO> getUserInfo(Authentication authentication) {
         return ResponseEntity.ok(userService.retrieveUserInfo(authentication.getName()));
