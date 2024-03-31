@@ -34,13 +34,7 @@ public class CourierPanel extends JPanel {
         centerPanel.add(scrollPane, BorderLayout.CENTER);
         add(centerPanel, BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        bottomPanel.setBackground(new Color(70, 64, 64));
-
-        JButton addButton = new JButton("Add");
-        addButton.addActionListener(e -> openAddCourierPanel());
-
-        bottomPanel.add(addButton);
+        JPanel bottomPanel = getBottomPanel();
 
         add(bottomPanel, BorderLayout.SOUTH);
 
@@ -67,6 +61,22 @@ public class CourierPanel extends JPanel {
                 fetchCouriers();
             }
         }, 0, 3000);
+    }
+
+    private JPanel getBottomPanel() {
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.setBackground(new Color(70, 64, 64));
+
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(e -> openAddCourierPanel());
+        addButton.setFont(new Font("Arial", Font.BOLD, 14));
+        addButton.setBackground(new Color(43, 140, 3));
+        addButton.setForeground(Color.WHITE);
+        addButton.setOpaque(true);
+        addButton.setBorderPainted(false);
+
+        bottomPanel.add(addButton);
+        return bottomPanel;
     }
 
     private void fetchCouriers() {

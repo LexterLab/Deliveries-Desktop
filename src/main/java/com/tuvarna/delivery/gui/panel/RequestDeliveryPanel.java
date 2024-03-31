@@ -63,6 +63,11 @@ public class RequestDeliveryPanel extends JPanel {
         fetchCities(fromCityComboBox, toCityComboBox);
 
         JButton createButton = new JButton("Create");
+        createButton.setFont(new Font("Arial", Font.BOLD, 14));
+        createButton.setBackground(new Color(30, 255, 75));
+        createButton.setForeground(Color.WHITE);
+        createButton.setOpaque(true);
+        createButton.setBorderPainted(false);
         createButton.addActionListener(e -> fetchCreateDelivery());
 
         add(productNameLabel);

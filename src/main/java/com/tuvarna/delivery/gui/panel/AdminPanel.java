@@ -13,12 +13,27 @@ public class AdminPanel extends JPanel {
 
         JButton manageCouriersButton = new JButton("Manage Couriers");
         manageCouriersButton.addActionListener(e -> openCourierPanel());
+        manageCouriersButton.setFont(new Font("Arial", Font.BOLD, 14));
+        manageCouriersButton.setBackground(new Color(112, 103, 255));
+        manageCouriersButton.setForeground(Color.WHITE);
+        manageCouriersButton.setOpaque(true);
+        manageCouriersButton.setBorderPainted(false);
 
         JButton manageUsersButton = new JButton("Manage Users");
         manageUsersButton.addActionListener(e -> openUserPanel());
+        manageUsersButton.setFont(new Font("Arial", Font.BOLD, 14));
+        manageUsersButton.setBackground(new Color(255, 173, 106));
+        manageUsersButton.setForeground(Color.WHITE);
+        manageUsersButton.setOpaque(true);
+        manageUsersButton.setBorderPainted(false);
 
         JButton manageDeliveriesButton = new JButton("Manage Deliveries");
         manageDeliveriesButton.addActionListener(e -> openDeliveryPanel());
+        manageDeliveriesButton.setFont(new Font("Arial", Font.BOLD, 14));
+        manageDeliveriesButton.setBackground(new Color(43, 140, 3));
+        manageDeliveriesButton.setForeground(Color.WHITE);
+        manageDeliveriesButton.setOpaque(true);
+        manageDeliveriesButton.setBorderPainted(false);
 
         centerPanel.add(manageCouriersButton);
         centerPanel.add(manageUsersButton);

@@ -53,9 +53,19 @@ public class CourierInfoPanel extends JPanel {
 
         JButton updateButton = new JButton("Update");
         updateButton.addActionListener(e -> updateCourier());
+        updateButton.setFont(new Font("Arial", Font.BOLD, 14));
+        updateButton.setBackground(new Color(224, 143, 23));
+        updateButton.setForeground(Color.WHITE);
+        updateButton.setOpaque(true);
+        updateButton.setBorderPainted(false);
 
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e -> deleteCourier());
+        deleteButton.setFont(new Font("Arial", Font.BOLD, 14));
+        deleteButton.setBackground(new Color(227, 14, 38));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setOpaque(true);
+        deleteButton.setBorderPainted(false);
 
         add(officeLabel);
         add(officeComboBox);

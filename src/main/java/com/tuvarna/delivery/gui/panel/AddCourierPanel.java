@@ -76,6 +76,11 @@ public class AddCourierPanel extends JPanel {
 
         JButton createButton = new JButton("Create");
         createButton.addActionListener(e -> createCourier());
+        createButton.setFont(new Font("Arial", Font.BOLD, 14));
+        createButton.setBackground(new Color(43, 140, 3));
+        createButton.setForeground(Color.WHITE);
+        createButton.setOpaque(true);
+        createButton.setBorderPainted(false);
 
         add(usernameLabel);
         add(usernameField);

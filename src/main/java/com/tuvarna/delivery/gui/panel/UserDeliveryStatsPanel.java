@@ -36,8 +36,13 @@ public class UserDeliveryStatsPanel extends JPanel {
                 dataset
         );
 
+        chart.getPlot().setBackgroundPaint(new Color(70, 64, 64));
+        chart.getLegend().setBackgroundPaint(new Color(70, 64, 64));
+        chart.getLegend().setItemPaint(Color.WHITE);
+
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(600, 400));
+
 
         centerPanel.add(chartPanel);
 

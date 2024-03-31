@@ -52,6 +52,7 @@ public class DeliveryStatsPanel extends JPanel {
         chart.getPlot().setBackgroundPaint(new Color(70, 64, 64));
         chart.getLegend().setBackgroundPaint(new Color(70, 64, 64));
         chart.getLegend().setItemPaint(Color.WHITE);
+        chart.getTitle().setPaint(Color.WHITE);
 
 
         ChartPanel chartPanel = new ChartPanel(chart);

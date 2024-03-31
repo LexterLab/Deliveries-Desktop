@@ -69,6 +69,10 @@ public class UserDeliveryPanel  extends JPanel {
 
         JRadioButton fiveDaysRadioButton = new JRadioButton("Past five days");
         JRadioButton afterDateRadioButton = new JRadioButton("After Date");
+        fiveDaysRadioButton.setBackground(new Color(70, 64, 64));
+        fiveDaysRadioButton.setForeground(Color.WHITE);
+        afterDateRadioButton.setBackground(new Color(70, 64, 64));
+        afterDateRadioButton.setForeground(Color.WHITE);
 
         fiveDaysRadioButton.addActionListener(e -> fetchDeliveriesMadeRecentFiveDays(fiveDaysRadioButton));
         afterDateRadioButton.addActionListener(e -> datePicker.setVisible(true));

@@ -48,9 +48,19 @@ public class UserInfoPanel extends JPanel {
 
         JButton updateButton = new JButton("Update");
         updateButton.addActionListener(e -> updateUser());
+        updateButton.setFont(new Font("Arial", Font.BOLD, 14));
+        updateButton.setBackground(new Color(224, 143, 23));
+        updateButton.setForeground(Color.WHITE);
+        updateButton.setOpaque(true);
+        updateButton.setBorderPainted(false);
 
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e -> deleteUser());
+        deleteButton.setFont(new Font("Arial", Font.BOLD, 14));
+        deleteButton.setBackground(new Color(227, 14, 38));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setOpaque(true);
+        deleteButton.setBorderPainted(false);
 
         add(usernameLabel);
         add(usernameField);
