@@ -1,14 +1,12 @@
 package com.tuvarna.delivery.gui.panel;
 
 import com.tuvarna.delivery.authentication.payload.request.LoginRequestDTO;
-import com.tuvarna.delivery.delivery.model.Delivery;
-import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.gui.service.AuthService;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.gui.utils.PanelLoader;
 import com.tuvarna.delivery.jwt.JWTAuthenticationResponse;
 import com.tuvarna.delivery.utils.ErrorFormatter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.*;
