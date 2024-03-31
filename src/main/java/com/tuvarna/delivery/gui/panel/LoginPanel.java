@@ -1,11 +1,14 @@
 package com.tuvarna.delivery.gui.panel;
 
 import com.tuvarna.delivery.authentication.payload.request.LoginRequestDTO;
-import com.tuvarna.delivery.gui.AccessTokenStorage;
+import com.tuvarna.delivery.delivery.model.Delivery;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.gui.service.AuthService;
+import com.tuvarna.delivery.gui.utils.PanelLoader;
 import com.tuvarna.delivery.jwt.JWTAuthenticationResponse;
 import com.tuvarna.delivery.utils.ErrorFormatter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.*;
@@ -99,16 +102,8 @@ public class LoginPanel extends JPanel {
             try {
                 ResponseEntity<JWTAuthenticationResponse> response = service.fetchSignIn(new LoginRequestDTO(username, password));
                 AccessTokenStorage.storeAccessToken(Objects.requireNonNull(response.getBody()).getAccessToken());
-                UserPanel signUpPanel = new UserPanel();
-
-
-                JDialog dialog = new JDialog();
-                dialog.setTitle("Sign Up");
-                dialog.setModal(true);
-                dialog.setContentPane(signUpPanel);
-                dialog.pack();
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);
+                PanelLoader loader = new PanelLoader();
+                loader.loadPanel();
             } catch (HttpClientErrorException ex) {
                 String errorMessage = ex.getResponseBodyAsString();
 
