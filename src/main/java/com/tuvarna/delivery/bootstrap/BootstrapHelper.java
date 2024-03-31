@@ -17,6 +17,7 @@ import com.tuvarna.delivery.user.repository.RoleRepository;
 import com.tuvarna.delivery.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -91,7 +92,52 @@ public class BootstrapHelper {
         delivery.setWeightKG(1.00);
         delivery.setProductName("Laptop");
 
-        deliveryRepository.saveAll(List.of(delivery));
+        Delivery delivery2 = new Delivery();
+        delivery2.setStatus(waiting);
+        delivery2.setUser(user);
+        delivery2.setDetails("Optional info");
+        delivery2.setFromCity(varna);
+        delivery2.setToCity(sofia);
+        delivery2.setTotalPrice(50.00);
+        delivery2.setWeightKG(1.00);
+        delivery2.setProductName("Laptop");
+        delivery2.setOrderedAt(LocalDateTime.now().minusDays(4));
+
+        Delivery delivery3 = new Delivery();
+        delivery3.setStatus(waiting);
+        delivery3.setUser(user);
+        delivery3.setDetails("Optional info");
+        delivery3.setFromCity(varna);
+        delivery3.setToCity(sofia);
+        delivery3.setTotalPrice(50.00);
+        delivery3.setWeightKG(1.00);
+        delivery3.setProductName("Laptop");
+        delivery3.setOrderedAt(LocalDateTime.now().minusDays(3));
+
+
+        Delivery delivery4 = new Delivery();
+        delivery4.setStatus(waiting);
+        delivery4.setUser(user);
+        delivery4.setDetails("Optional info");
+        delivery4.setFromCity(varna);
+        delivery4.setToCity(sofia);
+        delivery4.setTotalPrice(50.00);
+        delivery4.setWeightKG(1.00);
+        delivery4.setProductName("Laptop");
+        delivery4.setOrderedAt(LocalDateTime.now().minusDays(2));
+
+        Delivery delivery5 = new Delivery();
+        delivery5.setStatus(waiting);
+        delivery5.setUser(user);
+        delivery5.setDetails("Optional info");
+        delivery5.setFromCity(varna);
+        delivery5.setToCity(sofia);
+        delivery5.setTotalPrice(50.00);
+        delivery5.setWeightKG(1.00);
+        delivery5.setProductName("Laptop");
+        delivery5.setOrderedAt(LocalDateTime.now().minusDays(1));
+
+        deliveryRepository.saveAll(List.of(delivery, delivery2, delivery3, delivery4, delivery5));
 
         Office office = new Office();
         office.setCity(varna);
