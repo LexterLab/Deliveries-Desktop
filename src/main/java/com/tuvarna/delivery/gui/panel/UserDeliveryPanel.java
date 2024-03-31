@@ -3,7 +3,9 @@ package com.tuvarna.delivery.gui.panel;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryDTO;
 import com.tuvarna.delivery.delivery.payload.response.DeliveryResponse;
 import com.tuvarna.delivery.gui.model.DeliveryTableModel;
+import com.tuvarna.delivery.gui.model.SignOutButtonModel;
 import com.tuvarna.delivery.gui.service.UserService;
+import com.tuvarna.delivery.gui.utils.AccessTokenStorage;
 import com.tuvarna.delivery.gui.utils.DateLabelFormatter;
 import com.tuvarna.delivery.utils.ErrorFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -24,6 +26,7 @@ public class UserDeliveryPanel  extends JPanel {
     private LocalDate afterDate = null;
     private final UserService userService = new UserService();
     private JDatePickerImpl datePicker;
+    private final Timer timer;
     public UserDeliveryPanel() {
         setLayout(new BorderLayout());
         setBackground(new Color(70, 64, 64));
@@ -50,7 +53,7 @@ public class UserDeliveryPanel  extends JPanel {
 
         add(bottomPanel, BorderLayout.SOUTH);
 
-        java.util.Timer timer = new Timer();
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -131,6 +134,11 @@ public class UserDeliveryPanel  extends JPanel {
         requestButton.setBorderPainted(false);
         requestButton.addActionListener(e -> openRequestDeliveryPanel());
         bottomPanel.add(requestButton);
+
+        SignOutButtonModel model = new SignOutButtonModel();
+        JButton signOutButton = model.getSignOutButton();
+        signOutButton.addActionListener(e -> signOut());
+        bottomPanel.add(signOutButton);
         return bottomPanel;
     }
 
@@ -196,5 +204,13 @@ public class UserDeliveryPanel  extends JPanel {
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+    }
+
+    private void signOut() {
+        AccessTokenStorage.removeAccessToken();
+        timer.cancel();
+        Window window = SwingUtilities.getWindowAncestor(this);
+        window.dispose();
+        
     }
 }
