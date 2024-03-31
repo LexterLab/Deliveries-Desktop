@@ -67,4 +67,16 @@ public class UserService {
 
         return restTemplate.exchange(url, HttpMethod.GET, entity, DeliveryResponse.class);
     }
+
+    public ResponseEntity<UserDTO> fetchUserInfo() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(AccessTokenStorage.retrieveAccessToken());
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = AppConstants.DOMAIN + "users/info";
+
+        return restTemplate.exchange(url, HttpMethod.GET, entity, UserDTO.class);
+    }
 }
