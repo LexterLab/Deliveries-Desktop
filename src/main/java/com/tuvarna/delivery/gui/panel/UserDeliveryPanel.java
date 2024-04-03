@@ -146,6 +146,7 @@ public class UserDeliveryPanel  extends JPanel {
     private void clearFilters(ButtonGroup group) {
         group.clearSelection();
         afterDate = null;
+        fiveDaysAgo = null;
         datePicker.setVisible(false);
         fetchDeliveries();
     }
