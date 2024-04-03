@@ -51,13 +51,17 @@ public class UserService {
         });
     }
 
-    public ResponseEntity<DeliveryResponse> fetchFilteredUserDeliveries(LocalDate afterDate) {
+    public ResponseEntity<DeliveryResponse> fetchFilteredUserDeliveries(LocalDate afterDate, LocalDate fiveDaysAgo) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(AccessTokenStorage.retrieveAccessToken());
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(AppConstants.DOMAIN + "users/deliveries");
         if (afterDate != null) {
             builder.queryParam("afterDate", afterDate);
+        }
+
+        if (fiveDaysAgo != null) {
+            builder.queryParam("fiveDaysAgo", fiveDaysAgo);
         }
 
         HttpEntity<String> entity = new HttpEntity<>(headers);

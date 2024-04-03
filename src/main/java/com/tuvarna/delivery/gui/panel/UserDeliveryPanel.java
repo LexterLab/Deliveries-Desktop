@@ -24,6 +24,7 @@ import java.util.Timer;
 public class UserDeliveryPanel  extends JPanel {
     private final JTable deliveryTable;
     private LocalDate afterDate = null;
+    private LocalDate fiveDaysAgo = null;
     private final UserService userService = new UserService();
     private JDatePickerImpl datePicker;
     private final Timer timer;
@@ -151,7 +152,7 @@ public class UserDeliveryPanel  extends JPanel {
 
     private void fetchDeliveries() {
         try {
-            ResponseEntity<DeliveryResponse> response = userService.fetchFilteredUserDeliveries(afterDate);
+            ResponseEntity<DeliveryResponse> response = userService.fetchFilteredUserDeliveries(afterDate, fiveDaysAgo);
             setTableData(Objects.requireNonNull(response.getBody()).deliveries());
         } catch (HttpClientErrorException e) {
             String errorMessage = e.getResponseBodyAsString();
@@ -168,14 +169,16 @@ public class UserDeliveryPanel  extends JPanel {
     private void fetchDeliveriesMadeRecentFiveDays(JRadioButton fiveDaysRadioButton) {
         if (fiveDaysRadioButton.isSelected()) {
             datePicker.setVisible(false);
-            afterDate = LocalDate.now().minusDays(5);
+            afterDate = null;
+            fiveDaysAgo = LocalDate.now().minusDays(5);
             fetchDeliveries();
         }
     }
 
     private void fetchDeliveriesPastDate(UtilDateModel model) {
-       afterDate =  LocalDate.of(model.getYear(), model.getMonth() + 1, model.getDay());
-       fetchDeliveries();
+        fiveDaysAgo = null;
+        afterDate =  LocalDate.of(model.getYear(), model.getMonth() + 1, model.getDay());
+        fetchDeliveries();
     }
 
     private void openUserDeliveryStatsPanel() {

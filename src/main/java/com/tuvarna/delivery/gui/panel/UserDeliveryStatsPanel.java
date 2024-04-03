@@ -53,7 +53,7 @@ public class UserDeliveryStatsPanel extends JPanel {
     public void fetchAndSplitData(DefaultCategoryDataset categoryDataset) {
         try {
             UserService service = new UserService();
-            ResponseEntity<DeliveryResponse> response = service.fetchFilteredUserDeliveries(null);
+            ResponseEntity<DeliveryResponse> response = service.fetchFilteredUserDeliveries(null, null);
             List<DeliveryDTO> deliveries = Objects.requireNonNull(response.getBody()).deliveries();
 
             Map<Month, Long> deliveriesPerMonthMap = deliveries.stream()

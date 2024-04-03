@@ -18,7 +18,8 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
     @Query("SELECT d FROM Delivery d " +
             "WHERE d.user.username = :username " +
-            "AND (cast(:afterDate as timestamp) IS NULL OR d.orderedAt >= :afterDate)")
+            "AND (cast(:afterDate as timestamp) IS NULL OR d.orderedAt >= :afterDate) " +
+            "AND (cast(:fiveDays as timestamp) IS NULL OR d.orderedAt BETWEEN :fiveDays AND CURRENT_TIMESTAMP)")
 
-    Page<Delivery> findAndFilterUserDeliveries(String username, LocalDateTime afterDate, Pageable pageable);
+    Page<Delivery> findAndFilterUserDeliveries(String username, LocalDateTime afterDate, LocalDateTime fiveDays,  Pageable pageable);
 }

@@ -34,7 +34,7 @@ public class UserService {
     private final UserHelper userHelper;
 
 
-    public DeliveryResponse retrieveUserDeliveries(String username, LocalDate afterDate, int pageNo, int pageSize, String sortBy, String sortDir) {
+    public DeliveryResponse retrieveUserDeliveries(String username, LocalDate afterDate, LocalDate fiveDaysAgo, int pageNo, int pageSize, String sortBy, String sortDir) {
         User user = userRepository.findUserByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
@@ -45,12 +45,19 @@ public class UserService {
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
         LocalDateTime convertedDate = null;
-        if(afterDate != null) {
+        LocalDateTime convertedFiveDaysAgo = null;
+        if (afterDate != null) {
             convertedDate = LocalDateTime.of(afterDate.getYear(), afterDate.getMonth(),
                     afterDate.getDayOfMonth(), 0, 0, 0, 0);
         }
 
-        Page<Delivery> deliveries = deliveryRepository.findAndFilterUserDeliveries(user.getUsername(),convertedDate, pageable);
+        if (fiveDaysAgo != null) {
+            convertedFiveDaysAgo = LocalDateTime.of(fiveDaysAgo.getYear(), fiveDaysAgo.getMonth(),
+                    fiveDaysAgo.getDayOfMonth(), 0, 0, 0, 0);
+        }
+
+        Page<Delivery> deliveries = deliveryRepository
+                .findAndFilterUserDeliveries(user.getUsername(),convertedDate, convertedFiveDaysAgo, pageable);
         return deliveryHelper.getDeliveryResponse(deliveries);
     }
 
