@@ -88,6 +88,8 @@ public class UserInfoPanel extends JPanel {
                     new UserRequestDTO(firstName, lastName, username, phoneNumber, address));
             JOptionPane.showMessageDialog(this, "Updated successfully",
                     "Updated successfully", JOptionPane.INFORMATION_MESSAGE);
+            Window window = SwingUtilities.getWindowAncestor(this);
+            window.dispose();
 
         } catch (HttpClientErrorException e) {
             String errorMessage = e.getResponseBodyAsString();

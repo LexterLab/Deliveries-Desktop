@@ -94,6 +94,8 @@ public class CourierInfoPanel extends JPanel {
                             new UpdateCourierRequestDTO(firstName, lastName, phoneNumber, experience, officeId));
             JOptionPane.showMessageDialog(this, "Updated successfully",
                     "Updated successfully", JOptionPane.INFORMATION_MESSAGE);
+            Window window = SwingUtilities.getWindowAncestor(this);
+            window.dispose();
         } catch (HttpClientErrorException e) {
             String errorMessage = e.getResponseBodyAsString();
             JOptionPane.showMessageDialog(this, ErrorFormatter
